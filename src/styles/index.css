@@ -129,6 +129,21 @@ body {
   overflow-x: hidden;
 }
 
+/* ── THEME TRANSITION ── */
+/* Only applied during toggle to avoid flash on page load */
+body.theme-transitioning,
+body.theme-transitioning *,
+body.theme-transitioning *::before,
+body.theme-transitioning *::after {
+  transition: background-color 0.4s ease,
+              color 0.4s ease,
+              border-color 0.4s ease,
+              box-shadow 0.4s ease,
+              background 0.4s ease,
+              fill 0.4s ease,
+              stroke 0.4s ease !important;
+}
+
 /* ── APP GRID BACKGROUND ── */
 body::before {
   content: "";
