@@ -724,26 +724,33 @@
 
 @keyframes sweepGlow {
   0% {
-    transform: translate(-100%, -100%) scale(0.8);
+    transform: translate(-120%, -120%) scale(1);
     opacity: 0;
   }
-  40% {
-    opacity: 0.6;
+  30% {
+    opacity: 0.8;
   }
   100% {
-    transform: translate(20%, 20%) scale(1.2);
+    transform: translate(30%, 30%) scale(1.5);
     opacity: 0;
   }
 }
 
 /* Base page fade for better transition layering */
 .page-transition {
-  animation: fadeInContent 0.8s ease-out both;
+  animation: pageRevealWipe 0.8s cubic-bezier(0.25, 1, 0.5, 1) both;
+  will-change: clip-path, filter;
 }
 
-@keyframes fadeInContent {
-  from { opacity: 0; filter: blur(10px); }
-  to { opacity: 1; filter: blur(0); }
+@keyframes pageRevealWipe {
+  0% { 
+    clip-path: polygon(-50% -50%, -50% -50%, -50% -50%, -50% -50%);
+    filter: blur(10px) brightness(1.5);
+  }
+  100% { 
+    clip-path: polygon(-50% 200%, 200% 200%, 200% -50%, 200% -50%);
+    filter: blur(0) brightness(1);
+  }
 }
 
  / *   = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
