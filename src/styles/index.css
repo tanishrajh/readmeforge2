@@ -590,35 +590,44 @@ body.light-mode .hero-title {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.logo-mark {
-  width: 38px;
-  height: 38px;
-  background: linear-gradient(135deg, var(--grad-cyan), var(--grad-blue));
-  border-radius: 12px;
+.logo:hover {
+  transform: scale(1.02);
+}
+
+.logo-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "JetBrains Mono", monospace;
-  font-weight: 800;
-  font-size: 16px;
-  color: #fff;
-  box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.2));
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.logo:hover .logo-container {
+  filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.5));
+  transform: rotate(-8deg) scale(1.1);
 }
 
 .logo-name {
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: -0.3px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  display: flex;
+  align-items: center;
 }
 
 .logo-name span {
-  color: var(--grad-cyan);
-  text-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+  background: linear-gradient(135deg, var(--grad-cyan), var(--grad-blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-left: 1px;
 }
 
 .header-center {
