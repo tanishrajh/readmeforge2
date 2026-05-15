@@ -1,19 +1,17 @@
 import { useEffect, useRef, useMemo } from 'react';
 import { useReadmeState } from '../../hooks/useReadmeState';
-import { useTheme } from '../../hooks/useTheme';
 import { useToast } from '../../components/ui/Toast';
 import { generateMarkdown } from '../../utils/markdownUtils';
 import { SECTIONS } from '../../utils/constants';
 import Sidebar from './Sidebar';
 import EditorPanel from './EditorPanel';
 import PreviewPanel from './PreviewPanel';
-import Logo from '../../components/ui/Logo';
+import Navbar from '../../components/layout/Navbar';
 import SEOHead from '../../components/shared/SEOHead';
 import { useState } from 'react';
 
 export default function ReadmeMaker() {
   const toast = useToast();
-  const { theme, toggleTheme } = useTheme();
 
   const {
     formData, updateField,
@@ -64,12 +62,9 @@ export default function ReadmeMaker() {
         title="README Maker — READMEForge"
         description="Generate a professional GitHub README in seconds with live preview, templates, and one-click export."
       />
-      <div id="app-builder">
+      <Navbar />
+      <div id="app-builder" style={{ paddingTop: 64 }}>
         <header className="header">
-          <a href="/" className="logo">
-            <Logo size={36} />
-            <span className="logo-name">README<span>Forge</span></span>
-          </a>
           <div className="header-center">
             <span style={{ fontSize: 11, color: 'var(--muted)', fontFamily: '"JetBrains Mono", monospace', marginRight: 4 }}>sections:</span>
             <span id="sectionCount" style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)' }}>{activeSectionCount}</span>
@@ -87,13 +82,10 @@ export default function ReadmeMaker() {
             <button className="hbtn" onClick={handleClearSaved}>🗑 Clear Saved</button>
             <button className="hbtn" onClick={handleResetAll}>↺ Reset All Fields</button>
             <button className="hbtn" onClick={handleCopyMarkdown}>Copy Markdown</button>
-            <button className="theme-toggle" id="themeToggle" title="Toggle dark/light mode" onClick={toggleTheme}>
-              {theme === 'dark' ? '🌙' : '☀️'}
-            </button>
           </div>
         </header>
 
-        <div className="main">
+        <div className="main" style={{ height: 'calc(100vh - 128px)' }}>
           <Sidebar
             sectionState={sectionState}
             toggleSection={toggleSection}

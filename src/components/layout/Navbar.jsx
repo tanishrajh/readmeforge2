@@ -1,42 +1,66 @@
-import { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
 import Logo from '../ui/Logo';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const updateScrollState = () => setIsScrolled(window.scrollY > 0);
+
+    updateScrollState();
+
+    window.addEventListener('scroll', updateScrollState, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', updateScrollState);
+    };
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  const isActiveRoute = (path, exact = false) => {
+    if (exact) return location.pathname === path;
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  };
+
+  const linkClassName = (isActive, extraClass = '') => `site-nav-link${isActive ? ' active' : ''}${extraClass ? ` ${extraClass}` : ''}`;
 
   return (
-    <nav className="site-nav">
+    <nav className={`site-nav${isScrolled ? ' is-scrolled' : ''}`}>
       <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
         <Logo size={36} />
         <span className="logo-name">README<span>Forge</span></span>
       </Link>
 
-      <div className={`site-nav-links${menuOpen ? ' open' : ''}`}>
-        <NavLink
+      <div id="site-navigation" className={`site-nav-links${menuOpen ? ' open' : ''}`}>
+        <Link
           to="/"
-          end
-          className={({ isActive }) => `site-nav-link${isActive ? ' active' : ''}`}
+          className={linkClassName(isActiveRoute('/', true))}
           onClick={() => setMenuOpen(false)}
         >
           Home
-        </NavLink>
-        <NavLink
+        </Link>
+        <Link
           to="/readme-maker"
-          className={({ isActive }) => `site-nav-link${isActive ? ' active' : ''}`}
+          className={linkClassName(isActiveRoute('/readme-maker'))}
           onClick={() => setMenuOpen(false)}
         >
           README Maker
-        </NavLink>
-        <NavLink
+        </Link>
+        <Link
           to="/how-to-use"
-          className={({ isActive }) => `site-nav-link${isActive ? ' active' : ''}`}
+          className={linkClassName(isActiveRoute('/how-to-use'))}
           onClick={() => setMenuOpen(false)}
         >
           How To Use
-        </NavLink>
+        </Link>
         <a
           href="https://github.com/Mohit-368/ReadmeForge"
           target="_blank"
@@ -48,6 +72,9 @@ export default function Navbar() {
           </svg>
           Source
         </a>
+      </div>
+
+      <div className="site-nav-actions">
         <button
           className="theme-toggle"
           id="themeToggle"
@@ -56,15 +83,19 @@ export default function Navbar() {
         >
           {theme === 'dark' ? '🌙' : '☀️'}
         </button>
-      </div>
 
-      <button
-        className="nav-hamburger"
-        aria-label="Toggle menu"
-        onClick={() => setMenuOpen(o => !o)}
-      >
-        <span /><span /><span />
-      </button>
+        <button
+          className="nav-hamburger"
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
     </nav>
   );
 }
