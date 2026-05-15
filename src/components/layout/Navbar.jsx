@@ -21,6 +21,7 @@ export default function Navbar() {
 
   // Update indicator position when route changes or window resizes
   useEffect(() => {
+    let rafId;
     const updateIndicator = () => {
       if (!navRef.current) return;
       const activeLink = navRef.current.querySelector('.site-nav-link.active');
@@ -36,12 +37,17 @@ export default function Navbar() {
       }
     };
 
-    // Small delay to ensure 'active' class is applied by NavLink
-    const timer = setTimeout(updateIndicator, 50);
+    // Use rAF to wait for the DOM to be ready and class to be applied
+    rafId = requestAnimationFrame(() => {
+      updateIndicator();
+      // Second check for reliability
+      rafId = requestAnimationFrame(updateIndicator);
+    });
+
     window.addEventListener('resize', updateIndicator);
     
     return () => {
-      clearTimeout(timer);
+      cancelAnimationFrame(rafId);
       window.removeEventListener('resize', updateIndicator);
     };
   }, [location.pathname]);
