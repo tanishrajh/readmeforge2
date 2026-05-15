@@ -21,7 +21,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Update indicator position when route changes or window resizes
+    // Update indicator position when route changes or window resizes
   useEffect(() => {
     let rafId;
     const updateIndicator = () => {
@@ -40,11 +40,21 @@ export default function Navbar() {
     };
 
     // Use rAF to wait for the DOM to be ready and class to be applied
-    rafId = requestAnimationFrame(() => {
+    rafId = requestAnimationFrame(updateIndicator);
+
+    // If scrolled state changed, run a loop for the duration of the CSS transition (500ms)
+    // to keep the indicator "locked" while elements are moving
+    let startTime = Date.now();
+    const transitionLoop = () => {
       updateIndicator();
-      // Second check for reliability
-      rafId = requestAnimationFrame(updateIndicator);
-    });
+      if (Date.now() - startTime < 600) {
+        rafId = requestAnimationFrame(transitionLoop);
+      }
+    };
+    
+    if (scrolled !== undefined) {
+      transitionLoop();
+    }
 
     window.addEventListener('resize', updateIndicator);
     
