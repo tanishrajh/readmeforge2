@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
 import Logo from '../ui/Logo';
 
@@ -7,6 +7,9 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const navRef = useRef(null);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +19,33 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Update indicator position when route changes or window resizes
+  useEffect(() => {
+    const updateIndicator = () => {
+      if (!navRef.current) return;
+      const activeLink = navRef.current.querySelector('.site-nav-link.active');
+      if (activeLink) {
+        const { offsetLeft, offsetWidth } = activeLink;
+        setIndicatorStyle({
+          left: offsetLeft,
+          width: offsetWidth,
+          opacity: 1
+        });
+      } else {
+        setIndicatorStyle(prev => ({ ...prev, opacity: 0 }));
+      }
+    };
+
+    // Small delay to ensure 'active' class is applied by NavLink
+    const timer = setTimeout(updateIndicator, 50);
+    window.addEventListener('resize', updateIndicator);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateIndicator);
+    };
+  }, [location.pathname]);
+
   return (
     <nav className={`site-nav${scrolled ? ' scrolled' : ''}`}>
       <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
@@ -23,7 +53,17 @@ export default function Navbar() {
         <span className="logo-name">README<span>Forge</span></span>
       </Link>
 
-      <div className={`site-nav-links${menuOpen ? ' open' : ''}`}>
+      <div className={`site-nav-links${menuOpen ? ' open' : ''}`} ref={navRef}>
+        {/* Sliding Indicator */}
+        <div 
+          className="nav-active-indicator" 
+          style={{
+            transform: `translateX(${indicatorStyle.left}px)`,
+            width: `${indicatorStyle.width}px`,
+            opacity: indicatorStyle.opacity
+          }}
+        />
+
         <NavLink
           to="/"
           end
