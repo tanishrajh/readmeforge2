@@ -41,9 +41,9 @@
   /* Hero Variables */
   --hero-bg: #0f2230;
   --hero-text: #F9F3EF;
-  --grad-cyan: #6fa8c9;
-  --grad-blue: #456882;
-  --grad-purple: #D2C1B6;
+  --grad-cyan: #00f2ff;
+  --grad-blue: #0072ff;
+  --grad-purple: #7000ff;
 }
 
 /* Light Mode — Based on Warm White #F9F3EF & Soft Beige #D2C1B6 */
@@ -89,9 +89,9 @@ body.light-mode {
   /* Hero Variables for Light Mode */
   --hero-bg: #F9F3EF;
   --hero-text: #1B3C53;
-  --grad-cyan: #456882;
-  --grad-blue: #1B3C53;
-  --grad-purple: #D2C1B6;
+  --grad-cyan: #00c6ff;
+  --grad-blue: #0072ff;
+  --grad-purple: #b200ff;
 }
 
 body.light-mode::before {
@@ -377,7 +377,7 @@ body.light-mode .hero-title {
   height: 180px;
   animation: floatFast 6s ease-in-out infinite;
   z-index: 5;
-  filter: drop-shadow(0 20px 40px rgba(69, 104, 130, 0.2));
+  filter: drop-shadow(0 0 50px rgba(0, 114, 255, 0.4)) brightness(1.1) contrast(1.1);
 }
 
 .ast-arm {
@@ -425,7 +425,7 @@ body.light-mode .hero-title {
   height: 250px;
   animation: floatSlow 8s ease-in-out infinite;
   z-index: 4;
-  filter: drop-shadow(0 20px 40px rgba(34, 211, 238, 0.15));
+  filter: drop-shadow(0 0 60px rgba(112, 0, 255, 0.3)) brightness(1.1);
 }
 
 .css-pill {
