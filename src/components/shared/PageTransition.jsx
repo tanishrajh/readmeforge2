@@ -9,10 +9,10 @@ export default function PageTransition() {
     // Start animation on route change
     setIsAnimating(true);
     
-    // Duration matches CSS animation (1.4s total)
+    // Duration matches CSS animation (0.8s total)
     const timer = setTimeout(() => {
       setIsAnimating(false);
-    }, 1400);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, [location.pathname]);
