@@ -719,37 +719,36 @@
 
 @keyframes smokeSweep {
   0% {
-    transform: translate(-100%, -50%) scale(0.5) rotate(0deg);
+    transform: translate(-100%, -50%) scale(0.8) rotate(0deg);
     opacity: 0;
   }
-  30% {
-    opacity: 0.6;
+  20% {
+    opacity: 0.9;
   }
-  70% {
-    opacity: 0.6;
+  80% {
+    opacity: 0.9;
   }
   100% {
-    transform: translate(150%, 50%) scale(2) rotate(180deg);
+    transform: translate(150%, 50%) scale(2.5) rotate(180deg);
     opacity: 0;
   }
 }
 
 /* Base page fade for better transition layering */
 .page-transition {
-  opacity: 1;
-  animation: pageFadeInSmooth 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  animation: pageFadeInSmooth 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
 }
 
 @keyframes pageFadeInSmooth {
   0% { 
     opacity: 0;
-    filter: blur(15px);
-  }
-  40% {
-    opacity: 0.3;
+    filter: blur(20px);
+    transform: translateY(10px);
   }
   100% { 
     opacity: 1;
     filter: blur(0);
+    transform: translateY(0);
   }
 }
