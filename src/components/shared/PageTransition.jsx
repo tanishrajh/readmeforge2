@@ -9,10 +9,10 @@ export default function PageTransition() {
     // Start animation on route change
     setIsAnimating(true);
     
-    // Fast transition for Editor/HTU, regular for Home
+    // Ultra-fast for Editor/HTU, regular for Home
     const isFast = location.pathname !== '/';
-    const duration = isFast ? 800 : 1200;
-    const delay = isFast ? 150 : 300;
+    const duration = isFast ? 500 : 1200;
+    const delay = isFast ? 50 : 300;
 
     // Set CSS variables for sync
     document.documentElement.style.setProperty('--transition-duration', `${duration}ms`);
