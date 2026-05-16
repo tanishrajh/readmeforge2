@@ -8,6 +8,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isCompact = isScrolled || location.pathname !== '/';
   const navRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
 
@@ -55,7 +56,7 @@ export default function Navbar() {
       }
     };
     
-    if (isScrolled !== undefined) {
+    if (isCompact !== undefined) {
       transitionLoop();
     }
 
@@ -65,7 +66,7 @@ export default function Navbar() {
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', updateIndicator);
     };
-  }, [location.pathname, isScrolled]);
+  }, [location.pathname, isCompact]);
 
   const isActiveRoute = (path, exact = false) => {
     if (exact) return location.pathname === path;
@@ -75,9 +76,9 @@ export default function Navbar() {
   const linkClassName = (isActive, extraClass = '') => `site-nav-link${isActive ? ' active' : ''}${extraClass ? ` ${extraClass}` : ''}`;
 
   return (
-    <nav className={`site-nav${isScrolled ? ' is-scrolled scrolled' : ''}`}>
+    <nav className={`site-nav${isCompact ? ' is-scrolled scrolled' : ''}`}>
       <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
-        <Logo size={isScrolled ? 32 : 38} />
+        <Logo size={isCompact ? 32 : 38} />
         <span className="logo-name">README<span>Forge</span></span>
       </Link>
 
