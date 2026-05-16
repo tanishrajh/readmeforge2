@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme';
 import Logo from '../ui/Logo';
-import { useNavbarExtra } from '../../context/NavbarContext';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
@@ -11,7 +10,6 @@ export default function Navbar() {
   const location = useLocation();
   const navRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
-  const { extraContent } = useNavbarExtra();
 
   useEffect(() => {
     const updateScrollState = () => setIsScrolled(window.scrollY > 0);
@@ -140,8 +138,6 @@ export default function Navbar() {
       </div>
 
       <div className="site-nav-actions">
-        {extraContent && <div className="nav-extra-content desktop-only">{extraContent}</div>}
-
         <a
           href="https://github.com/Mohit-368/ReadmeForge"
           target="_blank"

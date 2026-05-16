@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useReadmeState } from '../../hooks/useReadmeState';
 import { useToast } from '../../components/ui/Toast';
 import { generateMarkdown } from '../../utils/markdownUtils';
@@ -6,11 +6,9 @@ import Sidebar from './Sidebar';
 import EditorPanel from './EditorPanel';
 import PreviewPanel from './PreviewPanel';
 import SEOHead from '../../components/shared/SEOHead';
-import { useNavbarExtra } from '../../context/NavbarContext';
 
 export default function ReadmeMaker() {
   const toast = useToast();
-  const { setExtraContent } = useNavbarExtra();
 
   const {
     formData, updateField,
@@ -30,27 +28,6 @@ export default function ReadmeMaker() {
   );
 
   const activeSectionCount = Object.values(sectionState).filter(Boolean).length;
-
-  // Inject Editor actions into Navbar
-  useEffect(() => {
-    setExtraContent(
-      <div className="editor-nav-actions">
-        <div className="header-center">
-          <span style={{ fontSize: 11, color: 'var(--muted)', fontFamily: '"JetBrains Mono", monospace', marginRight: 4 }}>sections:</span>
-          <span id="sectionCount" style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)' }}>{activeSectionCount}</span>
-          <span style={{ fontSize: 11, color: 'var(--muted)', fontFamily: '"JetBrains Mono", monospace' }}> active</span>
-          <span className={`autosave-status${autoSaved ? ' visible' : ''}`}>✓ Auto-saved</span>
-        </div>
-        <div className="header-right">
-          <button className="hbtn" onClick={handleClearSaved}>🗑 Clear</button>
-          <button className="hbtn" onClick={handleResetAll}>↺ Reset</button>
-          <button className="hbtn primary" onClick={handleCopyMarkdown}>Copy Markdown</button>
-        </div>
-      </div>
-    );
-
-    return () => setExtraContent(null);
-  }, [activeSectionCount, autoSaved, setExtraContent]);
 
   function handleApplyTemplate(template, key) {
     applyTemplate(template);
@@ -84,6 +61,19 @@ export default function ReadmeMaker() {
       />
       <div className="page-transition">
         <div id="app-builder" style={{ paddingTop: 64 }}>
+          <header className="header" style={{ top: 64 }}>
+            <div className="header-center">
+              <span style={{ fontSize: 11, color: 'var(--muted)', fontFamily: '"JetBrains Mono", monospace', marginRight: 4 }}>sections:</span>
+              <span id="sectionCount" style={{ fontSize: 12, fontWeight: 700, color: 'var(--accent)' }}>{activeSectionCount}</span>
+              <span style={{ fontSize: 11, color: 'var(--muted)', fontFamily: '"JetBrains Mono", monospace' }}> active</span>
+              <span className={`autosave-status${autoSaved ? ' visible' : ''}`}>✓ Auto-saved</span>
+            </div>
+            <div className="header-right">
+              <button className="hbtn" onClick={handleClearSaved}>🗑 Clear Saved</button>
+              <button className="hbtn" onClick={handleResetAll}>↺ Reset All Fields</button>
+              <button className="hbtn primary" onClick={handleCopyMarkdown}>Copy Markdown</button>
+            </div>
+          </header>
           <div className="main" style={{ height: 'calc(100vh - 128px)' }}>
             <Sidebar
               sectionState={sectionState}
