@@ -2926,7 +2926,7 @@ body.light-mode .gh-preview {
 
   .site-nav-links {
     position: absolute;
-    top: 64px;
+    top: 100%;
     left: 0;
     right: 0;
     display: flex;
