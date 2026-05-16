@@ -83,9 +83,6 @@ export default function Navbar() {
         <span className="logo-name">README<span>Forge</span></span>
       </Link>
 
-      {/* Editor-specific extra content injected here */}
-      {extraContent && <div className="nav-extra-content">{extraContent}</div>}
-
       <div id="site-navigation" className={`site-nav-links${menuOpen ? ' open' : ''}`} ref={navRef}>
         {/* Sliding Indicator */}
         <div 
@@ -143,6 +140,8 @@ export default function Navbar() {
       </div>
 
       <div className="site-nav-actions">
+        {extraContent && <div className="nav-extra-content desktop-only">{extraContent}</div>}
+
         <a
           href="https://github.com/Mohit-368/ReadmeForge"
           target="_blank"

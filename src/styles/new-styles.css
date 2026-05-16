@@ -54,9 +54,18 @@
 .nav-extra-content {
   display: flex;
   align-items: center;
-  flex: 1;
+  flex: none;
   justify-content: center;
-  gap: 24px;
+  gap: 16px;
+  margin-right: 16px;
+}
+
+@media (min-width: 769px) {
+  .site-nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .editor-nav-actions {
