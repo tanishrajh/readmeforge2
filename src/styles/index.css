@@ -2969,26 +2969,35 @@ body.light-mode .gh-preview {
     display: none !important;
   }
 
-  /* Show a duplicate "Source" link only inside the mobile dropdown */
   .mobile-only {
-    display: inline-flex !important;
+    display: flex !important;
   }
 
-  .site-nav-links.open .theme-toggle.mobile-only {
-    display: inline-flex !important;
-    width: 100%;
+  .mobile-actions-row {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 14px 16px;
-    border-radius: 8px;
+    gap: 16px;
+    padding-top: 14px;
+    margin-top: 6px;
+    border-top: 1px solid var(--border);
+    width: 100%;
+  }
+
+  .mobile-actions-row .site-nav-link--gh {
+    width: auto !important;
+    padding: 10px 18px !important;
+    margin: 0;
+  }
+
+  .mobile-actions-row .theme-toggle {
+    display: inline-flex !important;
+    width: auto !important;
+    padding: 10px 16px !important;
+    margin: 0;
+    border-radius: 12px;
     height: auto;
   }
-
-  /* When nav is open (dropdown), ensure mobile-only link is visible for testing */
-  .site-nav-links.open .mobile-only {
-    display: inline-flex;
-  }
-
-  /* Hide the mobile-only source link by default on larger screens */
 }
 
 /* Desktop: hide mobile-only link */
