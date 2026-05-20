@@ -25,6 +25,7 @@
 </a>
 </td>
 
+
 <td align="center" width="300">
 <a href="https://gssoc.girlscript.tech/">
 <img src="assets/gssoc.png" alt="GirlScript Summer of Code" width="100"/>
