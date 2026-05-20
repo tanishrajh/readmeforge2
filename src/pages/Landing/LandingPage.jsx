@@ -5,6 +5,7 @@ import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import SEOHead from '../../components/shared/SEOHead';
 import AntigravityBackground from '../../components/ui/AntigravityBackground';
+import ScrollRibbon from '../../components/ui/ScrollRibbon';
 
 const features = [
   { icon: '⚡', title: 'Live Preview', desc: 'See your README rendered in real-time as you type. GitHub-accurate preview with badge rendering.' },
@@ -72,7 +73,6 @@ function MagneticButton({ children, className }) {
 }
 
 export default function LandingPage() {
-  const statsRef = useRef(null);
   const { scrollY, scrollYProgress } = useScroll();
   
   // Smooth out the scroll progress for the top bar
@@ -89,15 +89,6 @@ export default function LandingPage() {
   const yCodeBlock1 = useTransform(scrollY, [0, 2000], [0, -250]);
   const yCodeBlock2 = useTransform(scrollY, [0, 2000], [0, 400]);
 
-  // SVG ribbon drawing — scoped to stats section
-  const { scrollYProgress: statsProgress } = useScroll({
-    target: statsRef,
-    offset: ["start 0.8", "end -1"]
-  });
-
-  // Direct 1:1 scroll-to-draw: ribbons extend as you scroll down, retract on scroll up
-  const ribbonDraw = useTransform(statsProgress, [0, 1], [0, 1]);
-
   return (
     <>
       <SEOHead
@@ -109,6 +100,9 @@ export default function LandingPage() {
       <motion.div className="scroll-progress-bar" style={{ scaleX }} />
 
       <div className="page-transition" style={{ position: 'relative' }}>
+
+      {/* 3D Scroll Ribbon */}
+      <ScrollRibbon />
 
 
       <div className="hero-wrapper" style={{ paddingTop: 64 }}>
@@ -145,66 +139,13 @@ export default function LandingPage() {
         <Link to="/readme-maker" className="scroll-btn">Start Building →</Link>
       </motion.div>
 
-      <section ref={statsRef} className="landing-stats" style={{ position: 'relative', zIndex: 2, overflow: 'visible' }}>
-        {/* SVG ribbons — originate from behind the cards, flow downward */}
-        <svg
-          style={{ 
-            position: 'absolute', 
-            top: '50%', 
-            left: 0, 
-            width: '100%', 
-            height: '1200px',
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-          viewBox="0 0 1000 1200" 
-          preserveAspectRatio="none"
-        >
-          {/* Ribbon 1 — from "Templates" card, sweeping S-curves */}
-          <motion.path 
-            d="M 125 0 C 40 80, 280 120, 160 200 C 40 280, 320 340, 180 420 C 40 500, 400 560, 280 660 C 160 760, 550 850, 700 1200" 
-            stroke="var(--accent)" 
-            strokeWidth="1.5" 
-            fill="none" 
-            style={{ pathLength: ribbonDraw }} 
-            opacity="0.15"
-          />
-          {/* Ribbon 2 — from "Tech Chips" card, tight zigzag loops */}
-          <motion.path 
-            d="M 375 0 C 520 50, 180 120, 440 200 C 700 280, 200 380, 500 460 C 800 540, 250 640, 540 740 C 780 840, 380 960, 500 1200" 
-            stroke="var(--accent2)" 
-            strokeWidth="1.2" 
-            fill="none" 
-            style={{ pathLength: ribbonDraw }} 
-            opacity="0.12"
-          />
-          {/* Ribbon 3 — from "Sections" card, wide dramatic arcs */}
-          <motion.path 
-            d="M 625 0 C 950 80, 50 200, 750 320 C 1050 400, 150 520, 680 640 C 900 720, 250 840, 550 960 C 700 1050, 300 1120, 450 1200" 
-            stroke="var(--accent)" 
-            strokeWidth="1" 
-            fill="none" 
-            style={{ pathLength: ribbonDraw }} 
-            opacity="0.1"
-          />
-          {/* Ribbon 4 — from "Quality Score" card, spiral to the left */}
-          <motion.path 
-            d="M 875 0 C 980 60, 680 140, 860 240 C 1040 340, 580 440, 760 540 C 480 640, 820 740, 540 840 C 260 940, 680 1060, 400 1200" 
-            stroke="var(--accent2)" 
-            strokeWidth="0.8" 
-            fill="none" 
-            style={{ pathLength: ribbonDraw }} 
-            opacity="0.08"
-          />
-        </svg>
-
+      <section className="landing-stats" style={{ position: 'relative', zIndex: 2 }}>
         <motion.div 
           className="landing-container"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          style={{ position: 'relative', zIndex: 1 }}
         >
           {stats.map((s) => (
             <motion.div key={s.label} className="stat-card" variants={staggerItem}>
