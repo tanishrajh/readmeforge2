@@ -765,6 +765,7 @@
 /* Base page fade for better transition layering */
 .page-transition {
   opacity: 0;
+  overflow-x: hidden;
   will-change: transform, opacity, filter;
   animation: pageFadeInSmooth var(--transition-duration, 1s) cubic-bezier(0.4, 0, 0.2, 1) var(--transition-delay, 0.3s) forwards;
   backface-visibility: hidden;
