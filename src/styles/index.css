@@ -602,13 +602,21 @@ body.light-mode .hero-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.2));
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.15)) drop-shadow(0 0 20px rgba(0, 242, 255, 0.08));
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .logo:hover .logo-container {
-  filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.5));
-  transform: rotate(-8deg) scale(1.1);
+  filter: drop-shadow(0 0 12px rgba(0, 242, 255, 0.4)) drop-shadow(0 0 30px rgba(0, 242, 255, 0.15));
+  transform: rotate(-6deg) scale(1.12);
+}
+
+.logo-container .logo-base-path {
+  transition: filter 0.4s ease;
+}
+
+.logo:hover .logo-base-path {
+  filter: brightness(1.15);
 }
 
 .logo-name {

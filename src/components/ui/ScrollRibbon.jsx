@@ -53,18 +53,12 @@ const SEGS = [
   [{ x:0.35, y:0.91 }, { x:0.50, y:0.96 }, { x:0.85, y:0.95 }, { x:1.08, y:0.94 }],
 ];
 
-const N = 30;          // samples per bezier segment
+const N = 40;          // samples per bezier segment (more = smoother text)
 const HW = 30;         // half-width of ribbon in px
 const TWISTS = 3;      // number of full 360° twists
 
-const LABELS = [
-  { t: 0.10, text: 'README GENERATOR' },
-  { t: 0.25, text: 'LIVE PREVIEW' },
-  { t: 0.42, text: '8+ TEMPLATES' },
-  { t: 0.58, text: 'AUTO-SAVE' },
-  { t: 0.74, text: 'QUALITY SCORE' },
-  { t: 0.90, text: 'OPEN SOURCE' },
-];
+// Continuous text that tiles across the entire ribbon surface
+const RIBBON_TEXT = '  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  READMEFORGE  ·  ';
 
 /* ── Component ──────────────────────────────────── */
 export default function ScrollRibbon() {
@@ -128,7 +122,6 @@ export default function ScrollRibbon() {
     const back  = isDark ? [30,  65,  90, 0.55]  : [45,  80, 110, 0.25];
     const edgeF = isDark ? [170, 215, 240, 0.40] : [130, 190, 225, 0.30];
     const edgeB = isDark ? [60,  95, 125, 0.25]  : [55,  90, 120, 0.15];
-    const txtC  = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(20,50,70,0.5)';
 
     // ── Shadow pass (offset, low-opacity, no blur) ──
     ctx.globalAlpha = isDark ? 0.10 : 0.05;
@@ -181,25 +174,64 @@ export default function ScrollRibbon() {
       ctx.stroke();
     }
 
-    // ── Text labels along the ribbon ──
-    ctx.font = '600 11px "Inter", sans-serif';
+    // ── Text — individual characters pasted across the entire ribbon ──
+    const fontSize = 18;
+    ctx.font = `800 ${fontSize}px "Inter", sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    for (const lb of LABELS) {
-      const idx = Math.floor(lb.t * (pts.length - 1));
-      if (idx > last) continue;
-      const pt = pts[idx];
-      // Skip text when ribbon is nearly edge-on
-      if (Math.abs(pt.cosT) < 0.35) continue;
+
+    const charSpacing = (pts.length - 1) / RIBBON_TEXT.length;
+
+    for (let ci = 0; ci < RIBBON_TEXT.length; ci++) {
+      const ptIdx = Math.min(Math.round(ci * charSpacing), pts.length - 1);
+      if (ptIdx > last) break;
+
+      const ch = RIBBON_TEXT[ci];
+      if (ch === ' ') continue; // skip spaces for performance
+
+      const pt = pts[ptIdx];
+      const absCos = Math.abs(pt.cosT);
+      if (absCos < 0.08) continue; // invisible when edge-on
+
+      const textAlpha = Math.pow(absCos, 1.2);
+      const faceTint = (pt.cosT + 1) / 2;
 
       ctx.save();
       ctx.translate(pt.cx, pt.cy);
+
       let a = pt.angle;
-      // Flip if text would be upside-down
       if (a > Math.PI / 2 || a < -Math.PI / 2) a += Math.PI;
       ctx.rotate(a);
-      ctx.fillStyle = txtC;
-      ctx.fillText(lb.text, 0, 0);
+
+      // Perspective squash — character width compresses with the twist
+      ctx.scale(absCos, 1);
+
+      // Deboss shadow
+      ctx.fillStyle = isDark
+        ? `rgba(0,0,0,${0.45 * textAlpha})`
+        : `rgba(0,15,30,${0.25 * textAlpha})`;
+      ctx.fillText(ch, 0.6, 1.0);
+
+      // Emboss highlight
+      ctx.fillStyle = isDark
+        ? `rgba(190,225,250,${0.12 * textAlpha})`
+        : `rgba(255,255,255,${0.15 * textAlpha})`;
+      ctx.fillText(ch, -0.4, -0.5);
+
+      // Main character — tinted to the underlying ribbon face
+      if (isDark) {
+        const r = Math.round(160 + faceTint * 70);
+        const g = Math.round(200 + faceTint * 35);
+        const b = Math.round(225 + faceTint * 20);
+        ctx.fillStyle = `rgba(${r},${g},${b},${0.6 * textAlpha})`;
+      } else {
+        const r = Math.round(15 + faceTint * 40);
+        const g = Math.round(40 + faceTint * 30);
+        const b = Math.round(60 + faceTint * 25);
+        ctx.fillStyle = `rgba(${r},${g},${b},${0.5 * textAlpha})`;
+      }
+      ctx.fillText(ch, 0, 0);
+
       ctx.restore();
     }
   }, []);
