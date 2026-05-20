@@ -213,8 +213,8 @@
 /* STATS */
 .landing-stats {
   padding: 64px 0;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
+  border-bottom: none;
 }
 
 .landing-stats .landing-container {
@@ -858,4 +858,16 @@ html[data-theme="light"] .code-header .dot {
 .parallax-code-block.block-right {
   top: 60%;
   right: 2%;
+}
+
+/* Hero Transition Fade */
+.hero-transition-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 250px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  z-index: 1;
+  pointer-events: none;
 }

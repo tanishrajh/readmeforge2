@@ -106,16 +106,47 @@ export default function LandingPage() {
 
       <div className="page-transition" style={{ position: 'relative' }}>
 
-      {/* Animated SVG Line */}
-      <svg className="scroll-line-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+      {/* Animated SVG Ribbons */}
+      <svg className="scroll-line-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+        {/* Main central ribbon */}
         <motion.path 
-          d="M 50 0 C 10 30, 90 70, 50 100" 
+          d="M 500 0 C 200 300, 800 700, 500 1000" 
           stroke="var(--accent)" 
-          strokeWidth="0.5" 
+          strokeWidth="2" 
           fill="none" 
-          strokeDasharray="1 1"
+          strokeDasharray="4 4"
+          style={{ pathLength }} 
+          opacity="0.4"
+        />
+        {/* Left curving ribbon */}
+        <motion.path 
+          d="M 200 0 C -100 400, 700 600, 300 1000" 
+          stroke="var(--accent)" 
+          strokeWidth="1.5" 
+          fill="none" 
+          strokeDasharray="2 6"
+          style={{ pathLength }} 
+          opacity="0.2"
+        />
+        {/* Right curving ribbon */}
+        <motion.path 
+          d="M 800 0 C 1100 200, 200 800, 700 1000" 
+          stroke="var(--accent2)" 
+          strokeWidth="1.5" 
+          fill="none" 
+          strokeDasharray="3 5"
           style={{ pathLength }} 
           opacity="0.3"
+        />
+        {/* Subtle accent ribbon */}
+        <motion.path 
+          d="M 350 0 C 600 300, 100 800, 600 1000" 
+          stroke="var(--accent2)" 
+          strokeWidth="1" 
+          fill="none" 
+          strokeDasharray="1 8"
+          style={{ pathLength }} 
+          opacity="0.2"
         />
       </svg>
 
@@ -140,16 +171,18 @@ export default function LandingPage() {
         <motion.div className="css-pills" style={{ y: yPills }}>
           <div className="css-pill" /><div className="css-pill" /><div className="css-pill" />
         </motion.div>
-
-        <motion.div 
-          className="scroll-action"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        >
-          <Link to="/readme-maker" className="scroll-btn">Start Building →</Link>
-        </motion.div>
       </div>
+
+      {/* CTA button sits outside the masked hero-wrapper */}
+      <motion.div 
+        className="scroll-action"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+        style={{ position: 'relative', zIndex: 20, marginTop: -60 }}
+      >
+        <Link to="/readme-maker" className="scroll-btn">Start Building →</Link>
+      </motion.div>
 
       <section className="landing-stats" style={{ position: 'relative', zIndex: 2 }}>
         <motion.div 

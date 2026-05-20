@@ -257,10 +257,11 @@ body::after {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
-  /* Locks the floating elements inside this section */
+  overflow: visible;
   z-index: 10;
-  /* Sits on top of the fixed body grids */
+  /* Smooth fade at the bottom edge */
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }
 
 .hero-wrapper::after {
@@ -3047,8 +3048,8 @@ body.light-mode .gh-preview {
 /* STATS */
 .landing-stats {
   padding: 64px 0;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
+  border-bottom: none;
 }
 
 .landing-stats .landing-container {
