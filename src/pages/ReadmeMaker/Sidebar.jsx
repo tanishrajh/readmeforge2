@@ -8,7 +8,7 @@ export default function Sidebar({
   const activeSectionCount = Object.values(sectionState).filter(Boolean).length;
 
   return (
-    <aside className="sidebar">
+    <aside className="sidebar" data-lenis-prevent="true">
       <div className="sidebar-section">
         <div className="sidebar-label">Templates</div>
         <div className="templates-grid">

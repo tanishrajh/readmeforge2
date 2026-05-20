@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import SEOHead from '../../components/shared/SEOHead';
 import useScrollReveal from '../../hooks/useScrollReveal';
+import AntigravityBackground from '../../components/ui/AntigravityBackground';
 
 const features = [
   { icon: '⚡', title: 'Live Preview', desc: 'See your README rendered in real-time as you type. GitHub-accurate preview with badge rendering.' },
@@ -24,6 +26,11 @@ const stats = [
 
 export default function LandingPage() {
   const revealRef = useScrollReveal();
+  const { scrollY } = useScroll();
+  
+  // Parallax transforms mapped to scroll position
+  const yAsterisk = useTransform(scrollY, [0, 1000], [0, 300]);
+  const yPills = useTransform(scrollY, [0, 1000], [0, -200]);
 
   return (
     <>
@@ -34,20 +41,35 @@ export default function LandingPage() {
       <div ref={revealRef} className="page-transition">
 
       <div className="hero-wrapper" style={{ paddingTop: 64 }}>
+        <AntigravityBackground />
+
         <main className="hero-content">
-          <h1 className="hero-title animate-entrance">GitHub<br />Readme.Md<br />maker</h1>
+          <motion.h1 
+            className="hero-title"
+            initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            GitHub<br />Readme.Md<br />maker
+          </motion.h1>
         </main>
 
-        <div className="css-asterisk">
+        <motion.div className="css-asterisk" style={{ y: yAsterisk }}>
           <div className="ast-arm" /><div className="ast-arm" /><div className="ast-arm" />
-        </div>
-        <div className="css-pills">
+        </motion.div>
+        
+        <motion.div className="css-pills" style={{ y: yPills }}>
           <div className="css-pill" /><div className="css-pill" /><div className="css-pill" />
-        </div>
+        </motion.div>
 
-        <div className="scroll-action animate-entrance delay-300">
+        <motion.div 
+          className="scroll-action"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+        >
           <Link to="/readme-maker" className="scroll-btn">Start Building →</Link>
-        </div>
+        </motion.div>
       </div>
 
       <section className="landing-stats reveal reveal-fade-up">

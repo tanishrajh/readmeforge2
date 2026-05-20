@@ -135,7 +135,7 @@ export default function PreviewPanel({ currentMd, formData, sectionState, select
   const zoomPct = Math.round(zoom * 100) + '%';
 
   return (
-    <aside className="preview">
+    <aside className="preview" data-lenis-prevent="true">
       <div className="preview-header">
         <div className="preview-tabs">
           <button

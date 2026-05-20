@@ -782,3 +782,24 @@
     transform: translateY(0) translateZ(0);
   }
 }
+
+/* Floating Thematic Tags */
+.floating-tag {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.4;
+  background: var(--hero-chip-bg);
+  border: 1px solid var(--hero-chip-border);
+  padding: 8px 16px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.floating-tag.tag-1 { top: 30%; left: 10%; transform: rotate(-15deg); }
+.floating-tag.tag-2 { top: 60%; right: 15%; transform: rotate(10deg); opacity: 0.3; }
+.floating-tag.tag-3 { bottom: 20%; left: 20%; transform: rotate(-5deg); opacity: 0.5; }

@@ -57,7 +57,7 @@ export default function EditorPanel({
   }
 
   return (
-    <div className="editor">
+    <div className="editor" data-lenis-prevent="true">
       <div className="editor-inner" id="editorInner">
 
         <EditorSection num={1} title="Project Title & Badges" hidden={!sectionState.title}>
