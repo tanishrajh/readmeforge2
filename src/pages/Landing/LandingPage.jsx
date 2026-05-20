@@ -72,6 +72,7 @@ function MagneticButton({ children, className }) {
 }
 
 export default function LandingPage() {
+  const statsRef = useRef(null);
   const { scrollY, scrollYProgress } = useScroll();
   
   // Smooth out the scroll progress for the top bar
@@ -88,11 +89,14 @@ export default function LandingPage() {
   const yCodeBlock1 = useTransform(scrollY, [0, 2000], [0, -250]);
   const yCodeBlock2 = useTransform(scrollY, [0, 2000], [0, 400]);
 
-  // SVG drawing logic
-  const pathLength = useSpring(scrollYProgress, {
-    stiffness: 50,
-    damping: 20
+  // SVG ribbon drawing — scoped to stats section
+  const { scrollYProgress: statsProgress } = useScroll({
+    target: statsRef,
+    offset: ["start 0.8", "end -1"]
   });
+
+  // Direct 1:1 scroll-to-draw: ribbons extend as you scroll down, retract on scroll up
+  const ribbonDraw = useTransform(statsProgress, [0, 1], [0, 1]);
 
   return (
     <>
@@ -106,49 +110,6 @@ export default function LandingPage() {
 
       <div className="page-transition" style={{ position: 'relative' }}>
 
-      {/* Animated SVG Ribbons */}
-      <svg className="scroll-line-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-        {/* Main central ribbon */}
-        <motion.path 
-          d="M 500 0 C 200 300, 800 700, 500 1000" 
-          stroke="var(--accent)" 
-          strokeWidth="2" 
-          fill="none" 
-          strokeDasharray="4 4"
-          style={{ pathLength }} 
-          opacity="0.4"
-        />
-        {/* Left curving ribbon */}
-        <motion.path 
-          d="M 200 0 C -100 400, 700 600, 300 1000" 
-          stroke="var(--accent)" 
-          strokeWidth="1.5" 
-          fill="none" 
-          strokeDasharray="2 6"
-          style={{ pathLength }} 
-          opacity="0.2"
-        />
-        {/* Right curving ribbon */}
-        <motion.path 
-          d="M 800 0 C 1100 200, 200 800, 700 1000" 
-          stroke="var(--accent2)" 
-          strokeWidth="1.5" 
-          fill="none" 
-          strokeDasharray="3 5"
-          style={{ pathLength }} 
-          opacity="0.3"
-        />
-        {/* Subtle accent ribbon */}
-        <motion.path 
-          d="M 350 0 C 600 300, 100 800, 600 1000" 
-          stroke="var(--accent2)" 
-          strokeWidth="1" 
-          fill="none" 
-          strokeDasharray="1 8"
-          style={{ pathLength }} 
-          opacity="0.2"
-        />
-      </svg>
 
       <div className="hero-wrapper" style={{ paddingTop: 64 }}>
         <AntigravityBackground />
@@ -184,13 +145,66 @@ export default function LandingPage() {
         <Link to="/readme-maker" className="scroll-btn">Start Building →</Link>
       </motion.div>
 
-      <section className="landing-stats" style={{ position: 'relative', zIndex: 2 }}>
+      <section ref={statsRef} className="landing-stats" style={{ position: 'relative', zIndex: 2, overflow: 'visible' }}>
+        {/* SVG ribbons — originate from behind the cards, flow downward */}
+        <svg
+          style={{ 
+            position: 'absolute', 
+            top: '50%', 
+            left: 0, 
+            width: '100%', 
+            height: '1200px',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+          viewBox="0 0 1000 1200" 
+          preserveAspectRatio="none"
+        >
+          {/* Ribbon 1 — from "Templates" card, sweeping S-curves */}
+          <motion.path 
+            d="M 125 0 C 40 80, 280 120, 160 200 C 40 280, 320 340, 180 420 C 40 500, 400 560, 280 660 C 160 760, 550 850, 700 1200" 
+            stroke="var(--accent)" 
+            strokeWidth="1.5" 
+            fill="none" 
+            style={{ pathLength: ribbonDraw }} 
+            opacity="0.15"
+          />
+          {/* Ribbon 2 — from "Tech Chips" card, tight zigzag loops */}
+          <motion.path 
+            d="M 375 0 C 520 50, 180 120, 440 200 C 700 280, 200 380, 500 460 C 800 540, 250 640, 540 740 C 780 840, 380 960, 500 1200" 
+            stroke="var(--accent2)" 
+            strokeWidth="1.2" 
+            fill="none" 
+            style={{ pathLength: ribbonDraw }} 
+            opacity="0.12"
+          />
+          {/* Ribbon 3 — from "Sections" card, wide dramatic arcs */}
+          <motion.path 
+            d="M 625 0 C 950 80, 50 200, 750 320 C 1050 400, 150 520, 680 640 C 900 720, 250 840, 550 960 C 700 1050, 300 1120, 450 1200" 
+            stroke="var(--accent)" 
+            strokeWidth="1" 
+            fill="none" 
+            style={{ pathLength: ribbonDraw }} 
+            opacity="0.1"
+          />
+          {/* Ribbon 4 — from "Quality Score" card, spiral to the left */}
+          <motion.path 
+            d="M 875 0 C 980 60, 680 140, 860 240 C 1040 340, 580 440, 760 540 C 480 640, 820 740, 540 840 C 260 940, 680 1060, 400 1200" 
+            stroke="var(--accent2)" 
+            strokeWidth="0.8" 
+            fill="none" 
+            style={{ pathLength: ribbonDraw }} 
+            opacity="0.08"
+          />
+        </svg>
+
         <motion.div 
           className="landing-container"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
+          style={{ position: 'relative', zIndex: 1 }}
         >
           {stats.map((s) => (
             <motion.div key={s.label} className="stat-card" variants={staggerItem}>
