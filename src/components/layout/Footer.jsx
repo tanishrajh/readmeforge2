@@ -31,7 +31,10 @@ export default function Footer() {
           <a href="https://github.com/tanishrajh" target="_blank" rel="noreferrer" className="footer-icon" title="GitHub">
             <GitHubIcon />
           </a>
-          <a href="https://www.linkedin.com/in/tanishrajh/" target="_blank" rel="noreferrer" className="footer-icon" title="LinkedIn">
+          <a href="https://www.linkedin.com/in/tanishrajh/" target="_blank" rel="noreferrer" className="footer-icon" title="LinkedIn - Tanishraj H">
+            <LinkedInIcon />
+          </a>
+          <a href="https://www.linkedin.com/in/rohit-m-guddin-4aba06276/" target="_blank" rel="noreferrer" className="footer-icon" title="LinkedIn - Rohit M G">
             <LinkedInIcon />
           </a>
         </div>
