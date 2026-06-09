@@ -78,7 +78,6 @@ export default function Navbar() {
   return (
     <nav className={`site-nav${isCompact ? ' is-scrolled scrolled' : ''}${menuOpen ? ' menu-open' : ''}`}>
       <Link to="/" className="logo" onClick={() => setMenuOpen(false)}>
-        <Logo size={isCompact ? 32 : 38} />
         <span className="logo-name">README<span>Forge</span></span>
       </Link>
 

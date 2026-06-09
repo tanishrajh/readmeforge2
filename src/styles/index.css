@@ -621,20 +621,25 @@ body.light-mode .hero-title {
 
 .logo-name {
   font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 20px;
-  letter-spacing: -0.04em;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: -0.05em;
   color: var(--text);
   display: flex;
   align-items: center;
+  line-height: 1;
+  text-transform: none;
+  position: relative;
 }
 
 .logo-name span {
-  background: linear-gradient(135deg, var(--grad-cyan), var(--grad-blue));
+  background: linear-gradient(135deg, var(--grad-cyan), var(--grad-blue), var(--grad-purple));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-left: 1px;
+  margin-left: 0;
+  font-weight: 900;
+  filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.2));
 }
 
 .header-center {
