@@ -28,11 +28,6 @@ export default function Footer() {
           <p>Designed &amp; Built by <strong>Tanishraj H</strong> and <strong>Rohit M G</strong></p>
         </div>
         <div className="footer-right">
-          <a href="https://github.com/tanishrajh/readmeforge2" target="_blank" rel="noreferrer" className="footer-link">
-            <CodeIcon />
-            Source Code
-          </a>
-          <div className="footer-divider" />
           <a href="https://github.com/tanishrajh" target="_blank" rel="noreferrer" className="footer-icon" title="GitHub">
             <GitHubIcon />
           </a>
