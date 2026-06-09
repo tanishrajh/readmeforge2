@@ -25,18 +25,18 @@ export default function Footer() {
       <div className="footer-content">
         <div className="footer-left">
           <Logo size={28} />
-          <p>Designed &amp; Built by <strong>Mohit Kumar</strong></p>
+          <p>Designed &amp; Built by <strong>Tanishraj H</strong> and <strong>Rohit M G</strong></p>
         </div>
         <div className="footer-right">
-          <a href="https://github.com/Mohit-368/ReadmeForge" target="_blank" rel="noreferrer" className="footer-link">
+          <a href="https://github.com/tanishrajh/readmeforge2" target="_blank" rel="noreferrer" className="footer-link">
             <CodeIcon />
             Source Code
           </a>
           <div className="footer-divider" />
-          <a href="https://github.com/Mohit-368" target="_blank" rel="noreferrer" className="footer-icon" title="GitHub">
+          <a href="https://github.com/tanishrajh" target="_blank" rel="noreferrer" className="footer-icon" title="GitHub">
             <GitHubIcon />
           </a>
-          <a href="https://www.linkedin.com/in/mohitkumar368/" target="_blank" rel="noreferrer" className="footer-icon" title="LinkedIn">
+          <a href="https://www.linkedin.com/in/tanishrajh/" target="_blank" rel="noreferrer" className="footer-icon" title="LinkedIn">
             <LinkedInIcon />
           </a>
         </div>
